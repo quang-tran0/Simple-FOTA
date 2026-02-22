@@ -1,0 +1,55 @@
+# =======================================
+# =========== STM32 GITIGNORE ===========
+# =======================================
+
+Debug/
+Release/
+.settings/
+*.launch
+.project
+.cproject
+.mxproject
+
+*.o
+*.d
+*.elf
+*.bin
+*.hex
+*.map
+*.lst
+
+
+# --- General ---
+**/*.dep
+**/*.pyc
+
+!*.ioc
+
+# =======================================
+# =========== ESP32 GITIGNORE ===========
+# =======================================
+ 
+build/
+managed_components/
+sdkconfig.old
+.vscode/
+
+# =======================================
+# =========== OTHER GITIGNORE ===========
+# =======================================
+
+# --- OS Generated Files ---
+.DS_Store
+.DS_Store?
+._*
+.Spotlight-V100
+.Trashes
+ehthumbs.db
+Thumbs.db
+[Dd]esktop.ini
+/.vscode/
+
+# --- Backup/Temporary Files ---
+*.bak
+*.tmp
+*~
