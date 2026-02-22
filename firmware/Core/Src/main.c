@@ -96,9 +96,9 @@ int main(void)
     lcd.address = LCD_ADDRESS;
 
     lcd_init(&lcd);
-    lcd_send_string(&lcd, "Hello, World!!");
+    lcd_send_string(&lcd, "Update new version!!");
     lcd_gotoxy(&lcd, 0, 1);
-    lcd_send_string(&lcd, "I'm STM32");
+    lcd_send_string(&lcd, "Firmware V1.0.1");
   /* USER CODE END 2 */
 
   /* Infinite loop */

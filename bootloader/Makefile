@@ -192,6 +192,19 @@ clean:
 	-rm -fR $(BUILD_DIR)
   
 #######################################
+# build and flash the application
+#######################################
+flash: all
+	st-flash erase
+	st-flash write $(BUILD_DIR)/$(TARGET).bin 0x08000000
+
+#######################################
+# Read flash memory to out.bin
+#######################################
+read:
+	st-flash read $(BUILD_DIR)/out.bin 0x08000000 0x100000
+
+#######################################
 # dependencies
 #######################################
 -include $(wildcard $(BUILD_DIR)/*.d)

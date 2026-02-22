@@ -1,4 +1,4 @@
-#include "uart.h"
+#include "flash_firmware_task.h"
 
 uint16_t simpleChecksum(uint8_t *data, int len) {
     uint16_t crc = 0;
@@ -76,4 +76,15 @@ void sendFirmwareToSTM32() {
 
     file.close();
     Serial.println("Finished sending firmware.bin to STM32.");
+}
+
+void flashFirmwareTask(void *pvParameters) {
+    while (1) {
+        // if (pendingFirmwareUpdate) {
+        //     Serial.println("Starting firmware flashing process...");
+        //     sendFirmwareToSTM32();
+        //     pendingFirmwareUpdate = false;
+        // }
+        vTaskDelay(5000);
+    }
 }

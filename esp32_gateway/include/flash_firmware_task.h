@@ -1,5 +1,5 @@
-#ifndef __UART_H
-#define __UART_H
+#ifndef __FLASH_FIRMWARE_TASK_H
+#define __FLASH_FIRMWARE_TASK_H
 
 #include "global.h"
 
@@ -8,6 +8,6 @@
 #define NACK 0x33
 #define BLOCK_SIZE 256
 
-void sendFirmwareToSTM32();
+void flashFirmwareTask(void *pvParameters);
 
 #endif

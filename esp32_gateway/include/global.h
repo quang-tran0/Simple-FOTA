@@ -7,4 +7,15 @@
 #include <SPIFFS.h>
 #include <WebServer.h>
 
+extern const char* WIFI_SSID;
+extern const char* WIFI_PASSWORD;
+
+extern const char* DEVICE_TOKEN;
+extern const char* SERVER_URL;
+
+extern bool pendingFirmwareDownload;
+extern bool pendingFirmwareFlash;
+extern String currentFirmwareVersion;
+extern String currentFirmwareTitle;
+
 #endif
