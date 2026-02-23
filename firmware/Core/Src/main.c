@@ -96,9 +96,9 @@ int main(void)
     lcd.address = LCD_ADDRESS;
 
     lcd_init(&lcd);
-    lcd_send_string(&lcd, "Update new version!!");
+    lcd_send_string(&lcd, "Hello, World!");
     lcd_gotoxy(&lcd, 0, 1);
-    lcd_send_string(&lcd, "Firmware V1.0.1");
+    lcd_send_string(&lcd, "Firmware V1.0.0");
   /* USER CODE END 2 */
 
   /* Infinite loop */

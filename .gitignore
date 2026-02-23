@@ -53,3 +53,6 @@ Thumbs.db
 *.bak
 *.tmp
 *~
+
+!sample_firmware_1.bin
+!sample_firmware_2.bin

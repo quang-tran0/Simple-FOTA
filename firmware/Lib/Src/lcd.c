@@ -50,24 +50,26 @@ void lcd_gotoxy(I2C_LCD_HandleTypeDef *lcd, int col, int row)
 
 void lcd_init(I2C_LCD_HandleTypeDef *lcd)
 {
-// 1. Đợi nguồn ổn định ít nhất 40ms
     HAL_Delay(50);
 
-    // Software Reset
-    lcd_send_cmd(lcd, 0x30);
-    HAL_Delay(5);  // > 4.1ms
-    lcd_send_cmd(lcd, 0x30);
-    HAL_Delay(1);  // > 100us
-    lcd_send_cmd(lcd, 0x30);
-    HAL_Delay(10);
-    lcd_send_cmd(lcd, 0x20);        // 4-bit mode
+    lcd_send_cmd(lcd, 0x33);
+    HAL_Delay(5);
+    lcd_send_cmd(lcd, 0x32);
+    HAL_Delay(1);
 
-    HAL_Delay(10);
-    lcd_send_cmd(lcd, 0x28);        // 5x7 dots, 8-bit mode, 2 lines
-    lcd_send_cmd(lcd, 0x01);        // Clear display
-    lcd_send_cmd(lcd, 0x06);        // Entry mode: cursor moves right, no display shift
-    lcd_send_cmd(lcd, 0x0C);        // Display on, cursor off, blink off
-    HAL_Delay(2);
+    // 0x28 = 4-bit mode, 2 lines, 5x8 dots
+    lcd_send_cmd(lcd, 0x28);
+    HAL_Delay(1);
+
+    // 0x0C = Display ON, Cursor OFF, Blink OFF
+    lcd_send_cmd(lcd, 0x0C);
+    HAL_Delay(1);
+
+    lcd_send_cmd(lcd, 0x06);
+    HAL_Delay(1);
+
+    lcd_send_cmd(lcd, 0x01);
+    HAL_Delay(5);
 }
 
 void lcd_send_string(I2C_LCD_HandleTypeDef *lcd, char *str)
