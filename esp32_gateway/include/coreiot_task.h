@@ -10,5 +10,9 @@ void coreiotTask(void *pvParameters);
 void coreiotSetup();
 void coreiotConnect();
 void callback(char* topic, byte* payload, unsigned int length);
+void handleAttributeTopic(const String& topic, const String& message);
+void handleRpcTopic(const String& topic, const String& message);
+void extractFirmwareInfo(JsonObject obj);
+String extractRpcMethodName(const String& payload);
 
 #endif

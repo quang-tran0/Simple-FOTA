@@ -17,5 +17,7 @@ const char* SERVER_URL = "app.coreiot.io";
 // ########################################
 
 bool pendingFirmwareDownload = false;
+bool pendingFirmwareFlash = false;
+bool autoFlashFirmware = false;
 String currentFirmwareVersion = "";
 String currentFirmwareTitle = "";

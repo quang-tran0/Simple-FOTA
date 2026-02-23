@@ -68,6 +68,7 @@ void downloadFirmwareTask(void *pvParameters) {
             Serial.println("Starting firmware download process...");
             downloadFirmware();
             pendingFirmwareDownload = false;
+            pendingFirmwareFlash = autoFlashFirmware;
         }
         vTaskDelay(5000);
     }

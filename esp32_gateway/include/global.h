@@ -15,6 +15,7 @@ extern const char* SERVER_URL;
 
 extern bool pendingFirmwareDownload;
 extern bool pendingFirmwareFlash;
+extern bool autoFlashFirmware;
 extern String currentFirmwareVersion;
 extern String currentFirmwareTitle;
 

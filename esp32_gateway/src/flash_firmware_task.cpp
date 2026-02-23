@@ -80,11 +80,11 @@ void sendFirmwareToSTM32() {
 
 void flashFirmwareTask(void *pvParameters) {
     while (1) {
-        // if (pendingFirmwareUpdate) {
-        //     Serial.println("Starting firmware flashing process...");
-        //     sendFirmwareToSTM32();
-        //     pendingFirmwareUpdate = false;
-        // }
+        if (pendingFirmwareFlash) {
+            Serial.println("Starting firmware flashing process...");
+            sendFirmwareToSTM32();
+            pendingFirmwareFlash = false;
+        }
         vTaskDelay(5000);
     }
 }
