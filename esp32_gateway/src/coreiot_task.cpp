@@ -121,6 +121,10 @@ void handleRpcTopic(const String& topic, const String& message) {
 
 void coreiotConnect() {
     while (1) {
+        if (!WiFi.isConnected()) {
+            vTaskDelay(2000);
+            continue;
+        }
         if (client.connect("ESP32_Gateway_Simple-FOTA", DEVICE_TOKEN, NULL)) {
             Serial.println("Connected to CoreIoT Server");
             break;
@@ -128,7 +132,7 @@ void coreiotConnect() {
             Serial.print("Failed to connect to CoreIoT Server, rc=");
             Serial.print(client.state());
             Serial.println(" Retrying in 5 seconds...");
-            delay(5000);
+            vTaskDelay(5000);
         }
     }
 }

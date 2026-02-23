@@ -64,6 +64,10 @@ void downloadFirmware() {
 
 void downloadFirmwareTask(void *pvParameters) {
     while (1) {
+        if (!WiFi.isConnected()) {
+            vTaskDelay(2000);
+            continue;
+        }
         if (pendingFirmwareDownload) {
             Serial.println("Starting firmware download process...");
             downloadFirmware();

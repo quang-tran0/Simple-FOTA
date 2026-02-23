@@ -67,7 +67,7 @@ void sendFirmwareToSTM32() {
         }
 
         blockCount++;
-        delay(10);
+        vTaskDelay(10);
     }
 
     // Send an empty packet to signal end of transmission
@@ -80,6 +80,10 @@ void sendFirmwareToSTM32() {
 
 void flashFirmwareTask(void *pvParameters) {
     while (1) {
+        if (!WiFi.isConnected()) {
+            vTaskDelay(2000);
+            continue;
+        }
         if (pendingFirmwareFlash) {
             Serial.println("Starting firmware flashing process...");
             sendFirmwareToSTM32();
