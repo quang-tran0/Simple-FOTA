@@ -1,75 +1,73 @@
-# Simple-FOTA Manual
+# Simple-FOTA
 
-This repository contains a simple end-to-end FOTA (Firmware Over-The-Air) setup for STM32 + ESP32 gateway + CoreIoT dashboard.
+Quick run guide for the Simple-FOTA system (STM32 + ESP32 gateway + CoreIoT).
 
-## 1) Project Overview
+## Quick start
 
-- [bootloader](bootloader): STM32 bootloader project.
-- [firmware](firmware): STM32 application firmware project.
-- [esp32_gateway](esp32_gateway): ESP32 gateway that downloads OTA firmware and flashes STM32.
-- [simple_fota_dashboard.json](simple_fota_dashboard.json): CoreIoT dashboard configuration.
+From project root:
 
-## 2) Typical OTA Flow
+1. Configure [esp32_gateway/src/global.cpp](esp32_gateway/src/global.cpp) (**required**).
 
-1. Build STM32 application firmware from [firmware](firmware).
-2. Export the generated firmware binary (`.bin`).
-3. Upload that firmware file to CoreIoT as OTA firmware.
-4. Assign the OTA firmware to the target CoreIoT device.
-5. ESP32 gateway downloads the assigned firmware and flashes it to STM32.
+	You must configure these variables before running:
 
-## 3) Important Note (CoreIoT OTA Assignment)
+	```cpp
+	const char* WIFI_SSID = "<your_wifi_ssid>";
+	const char* WIFI_PASSWORD = "<your_wifi_password>";
+	const char* DEVICE_TOKEN = "<your_device_token>";
+	```
 
-Firmware built from [firmware](firmware) can be uploaded into **OTA Firmware** on the CoreIoT platform, then assigned to a device so it is flashed into STM32.
+	Without correct values here, the gateway cannot connect properly or perform OTA as expected.
 
-In short:
-
-- Source firmware project: [firmware](firmware)
-- Upload destination: CoreIoT **OTA Firmware**
-- Deployment target: Assigned CoreIoT device
-- Final action: Gateway flashes firmware to STM32
-
-## 4) Build STM32 Projects
-
-Both [bootloader](bootloader) and [firmware](firmware) include a `Makefile`.
-
-From workspace root:
+2. Build STM32 app firmware (for OTA):
 
 ```bash
 cd firmware
-make
+make clean && make
 ```
 
+3. Build + flash STM32 bootloader:
+
 ```bash
-cd bootloader
-make
+cd ../bootloader
+make clean && make
+st-flash write ./build/bootloader.bin 0x08000000
 ```
 
-The build outputs are generated in each project's `build/` directory.
-
-## 5) ESP32 Gateway
-
-The ESP32 gateway project is in [esp32_gateway](esp32_gateway) and uses PlatformIO.
-
-Typical commands:
+4. Build + upload ESP32 gateway:
 
 ```bash
-cd esp32_gateway
+cd ../esp32_gateway
 pio run
 pio run -t upload
 ```
 
-Optional serial monitor:
+5. Monitor gateway logs:
 
 ```bash
 pio device monitor
 ```
 
-## 6) Suggested End-to-End Bring-Up
+6. OTA on CoreIoT:
+- (Optional) Import the prebuilt dashboard file [simple_fota_dashboard.json](simple_fota_dashboard.json).
+- Upload firmware `.bin` to **OTA Firmware**.
+- You can use prebuilt files [sample_firmware_1.bin](sample_firmware_1.bin) or [sample_firmware_2.bin](sample_firmware_2.bin), or your own build output.
+- Assign firmware to target device.
+- ESP32 downloads and flashes STM32 automatically.
 
-1. Flash STM32 bootloader from [bootloader](bootloader).
-2. Flash ESP32 gateway from [esp32_gateway](esp32_gateway).
-3. Build STM32 app in [firmware](firmware) and upload its `.bin` to CoreIoT OTA Firmware.
-4. Assign that OTA firmware to the device in CoreIoT.
-5. Verify ESP32 logs for download + flash success.
-6. Confirm STM32 boots into new application firmware.
+## Note
+
+⚠️ **Important:**
+- Before ESP32 starts flashing firmware, make sure STM32 is reset and in the expected boot state.
+- UART wiring must be correct: STM32 `PA9` (USART TX) -> ESP32 `RX2`, and STM32 `PA10` (USART RX) -> ESP32 `TX2`.
+- I2C wiring for LCD1602 module must be correct: STM32 `PB7` (`I2C1_SDA`) -> LCD1602 I2C module `SDA`, and STM32 `PB6` (`I2C1_SCL`) -> LCD1602 I2C module `SCL`.
+
+| STM32 pin | ESP32 pin |
+| --- | --- |
+| `PA9` (USART TX) | `RX2` |
+| `PA10` (USART RX) | `TX2` |
+
+| STM32 pin | LCD1602 I2C module pin |
+| --- | --- |
+| `PB7` (`I2C1_SDA`) | `SDA` |
+| `PB6` (`I2C1_SCL`) | `SCL` |
 
