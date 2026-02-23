@@ -48,7 +48,7 @@ pio device monitor
 ```
 
 6. OTA on CoreIoT:
-- (Optional) Import the prebuilt dashboard file [simple_fota_dashboard.json](simple_fota_dashboard.json).
+- Import the prebuilt dashboard file [simple_fota_dashboard.json](simple_fota_dashboard.json) and set the device for each widget.
 - Upload firmware `.bin` to **OTA Firmware**.
 - You can use prebuilt files [sample_firmware_1.bin](sample_firmware_1.bin) or [sample_firmware_2.bin](sample_firmware_2.bin), or your own build output.
 - Assign firmware to target device.
